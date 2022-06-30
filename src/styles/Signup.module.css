@@ -164,6 +164,16 @@
   cursor: pointer;
 }
 
+.errorMsg {
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: red
+}
+
 .login {
   margin-top: 30px;
   font-family: Nunito Sans;
