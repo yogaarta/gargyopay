@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../styles/Landing.module.css'
 import { Telephone, Lock, Download, ArrowLeft, ArrowRight } from 'react-bootstrap-icons'
 
@@ -14,8 +15,12 @@ export default function Landing() {
         <div className={styles.navbar}>
           <div className={styles.logo}>GargyoPay</div>
           <div className={styles.authContainer}>
-            <div className={styles.loginButton}>Login</div>
-            <div className={styles.signUpButton}>Sign Up</div>
+            <Link href={'/login'}>
+              <div className={styles.loginButton}>Login</div>
+            </Link>
+            <Link href={'/signup'}>
+              <div className={styles.signUpButton}>Sign Up</div>
+            </Link>
           </div>
         </div>
         <div className={styles.banner2}>
