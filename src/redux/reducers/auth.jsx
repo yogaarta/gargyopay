@@ -8,7 +8,6 @@ const initialState = {
 }
 
 const authReducer = (prevState = initialState, action) => {
-  console.log(action.payload)
   switch (action.type) {
     case loginString + PENDING:
       return { ...initialState, isLoading: true, isError: null }
