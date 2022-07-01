@@ -1,10 +1,11 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../styles/Signup.module.css'
 
 export default function SignupAside() {
   return (
     <aside className={styles.asideContainer}>
-      <div className={styles.logo}>GargyoPay</div>
+      <div className={styles.logo}><Link href={"/"}>GargyoPay</Link></div>
       <Image src={require('../assets/img/fullphone.png')} />
       <div className={styles.title}>
         App that Covering Banking Needs.

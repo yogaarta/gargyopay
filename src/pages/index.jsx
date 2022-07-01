@@ -15,10 +15,10 @@ export default function Landing() {
         <div className={styles.navbar}>
           <div className={styles.logo}>GargyoPay</div>
           <div className={styles.authContainer}>
-            <Link href={'/login'}>
+            <Link href={'/auth/login'}>
               <div className={styles.loginButton}>Login</div>
             </Link>
-            <Link href={'/signup'}>
+            <Link href={'/auth/signup'}>
               <div className={styles.signUpButton}>Sign Up</div>
             </Link>
           </div>

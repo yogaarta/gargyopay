@@ -1,5 +1,5 @@
-import SignupAside from "../../components/SignupAside";
-import styles from '../../styles/Signup.module.css'
+import SignupAside from "../../../components/SignupAside";
+import styles from '../../../styles/Signup.module.css'
 import Link from 'next/link'
 import { Person, Envelope, Lock, Eye, EyeSlash } from 'react-bootstrap-icons'
 import { useState } from "react";
