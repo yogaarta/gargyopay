@@ -4,6 +4,9 @@ import Link from 'next/link'
 import { Person, Envelope, Lock, Eye, EyeSlash } from 'react-bootstrap-icons'
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
+import Loading from '../../../components/Loading';
+import { Modal, Button } from "react-bootstrap";
 
 export default function Signup() {
   const [isPassShown, setIsPassShown] = useState(false)
@@ -16,8 +19,13 @@ export default function Signup() {
   const [emailFilled, setEmailFilled] = useState(false)
   const [passFilled, setPassFilled] = useState(false)
   const [buttonActive, setButtonActive] = useState(false)
-  const [isError, setIsError] = useState(false)
+  const [isError, setIsError] = useState(null)
   const [msg, setMsg] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [isShow, setIsShow] = useState(false)
+
+
+  const router = useRouter()
 
   useEffect(() => {
     setEmailFilled(email)
@@ -31,19 +39,29 @@ export default function Signup() {
   }
   const signUpHandler = async () => {
     try {
-      setIsError(false)
+      setIsError(null)
       setMsg("")
+      setIsLoading(true)
       let body = { firstName, lastName, email, password }
       let response = await axios.post(`${process.env.NEXT_PUBLIC_BE_HOST}/auth/register`, body)
       setMsg(response.data.msg)
+      setIsLoading(false)
+      setIsShow(true)
+      // router.push("/auth/login")
     } catch (error) {
       setIsError(true)
       setMsg(error.response.data.msg)
       console.log(error);
+      setIsLoading(false)
     }
   }
+  const handleClose = () => {
+    setIsShow(false)
+    router.push("/auth/login")
+  };
   return (
     <main className={styles.globalContainer}>
+      {isLoading && <Loading />}
       <SignupAside />
       <section className={styles.mainContainer}>
         <div className={styles.mainLogo}>GargyoPay</div>
@@ -96,6 +114,22 @@ export default function Signup() {
         }
         <div className={styles.login}>Already have an account? Let's <Link href={'/auth/login'}>Login</Link></div>
       </section>
+      <Modal
+        show={isShow}
+        onHide={() => setIsShow(false)}>
+        <Modal.Header className={styles.modalHeader}>
+          <b>{msg}</b>
+        </Modal.Header>
+        <Modal.Body className={styles.modalBody}>Please check your email and verify your account before login</Modal.Body>
+        <Modal.Footer>
+          {/* <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button> */}
+          <Button variant="primary" onClick={handleClose} className={styles.modalPrimaryButton}>
+            Login
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </main>
   )
 }

@@ -1,39 +1,52 @@
+import { useRouter, withRouter } from 'next/router'
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { Modal } from "react-bootstrap";
 import SignupAside from "../../../components/SignupAside";
 import styles from '../../../styles/Signup.module.css'
 import Link from 'next/link'
 import { Envelope, Lock, Eye, EyeSlash } from 'react-bootstrap-icons'
-import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import { loginAction } from "../../../redux/actionCreators/auth";
+import Loading from '../../../components/Loading';
 
-export default function Login() {
+function Login() {
   const [isPassShown, setIsPassShown] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [emailFilled, setEmailFilled] = useState(false)
   const [passFilled, setPassFilled] = useState(false)
-  const [isError, setIsError] = useState(null)
   const [buttonActive, setButtonActive] = useState(false)
-  const [msg, setMsg] = useState("")
+  const [isShow, setIsShow] = useState(false)
 
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const { isError, isLoading, message, data } = useSelector(state => state.auth)
   useEffect(() => {
     setEmailFilled(email)
     setPassFilled(password)
     setButtonActive(email && password)
-  }, [email, password, isError])
-
-  const loginHandler = async () => {
-    try {
-      setIsError(null)
-      setMsg("")
-      let body = { email, password }
-      let response = await axios.post(`${process.env.NEXT_PUBLIC_BE_HOST}/auth/login`, body)
-      setIsError(false)
-      setMsg(response.data.msg)
-
-    } catch (error) {
-      setIsError(true)
-      setMsg(error.response.data.msg)
+    // if (isLoading) {
+    //   setIsShow(true)
+    // }
+    if (isError === false) {
+      (data.pin ? router.push('/') : router.push('/auth/pin'))
     }
+  }, [email, password, isError, isLoading])
+
+  const loginHandler = () => {
+    // try {
+    let body = { email, password }
+    dispatch(loginAction(body))
+    // setTimeout(()=>{
+    // if (!isError) {
+    //   (data.pin ? router.push('/') : router.push('/auth/pin'))
+    // }
+    // }, 2000)
+
+    // } catch (error) {
+    //   console.log(error)
+    // }
   }
 
   const showPassHandler = () => {
@@ -41,6 +54,7 @@ export default function Login() {
   }
   return (
     <main className={styles.globalContainer}>
+      {isLoading && <Loading />}
       <SignupAside />
       <section className={styles.mainContainer}>
         <div className={styles.mainLogo}><Link href={"/"}>GargyoPay</Link></div>
@@ -63,16 +77,25 @@ export default function Login() {
             {isPassShown ? <Eye className={`${passFilled ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showPassHandler} /> : <EyeSlash className={`${passFilled ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showPassHandler} />}
           </label>
         </div>
-        <Link href={'/auth/forgot'}>
-          <div className={styles.forgot}>Forgot password?</div>
-        </Link>
-        {isError === null ? <></> : isError ? <div className={styles.errorMsg}>{msg}</div> : <div className={styles.errorMsg}>{msg}</div>}
-        {buttonActive ? 
-        <div className={styles.button} onClick={loginHandler}>Login</div> :
-        <div className={styles.buttonInactive}>Login</div>
+
+        <div className={styles.forgot}><Link href={'/auth/forgot'}>Forgot password?</Link></div>
+
+        {isError === null ? <></> : isError ? <div className={styles.errorMsg}>{message}</div> : <div className={styles.successMsg}>{message}</div>}
+        {buttonActive ?
+          <div className={styles.button} onClick={loginHandler}>Login</div> :
+          <div className={styles.buttonInactive}>Login</div>
         }
         <div className={styles.login}>Don't have an account? Let's <Link href={'/auth/signup'}>Sign Up</Link></div>
       </section>
+      <Modal
+        show={isShow}
+        onHide={() => setIsShow(false)}>
+        <Modal.Header>
+          {isLoading ? "Processing, Please wait" : message}
+        </Modal.Header>
+      </Modal>
     </main>
   )
 }
+
+export default withRouter(Login)
