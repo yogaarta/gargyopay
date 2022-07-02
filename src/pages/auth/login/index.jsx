@@ -30,7 +30,7 @@ function Login() {
     //   setIsShow(true)
     // }
     if (isError === false) {
-      (data.pin ? router.push('/') : router.push('/auth/pin'))
+      (data.pin ? router.push('/dashboard') : router.push('/auth/pin'))
     }
   }, [email, password, isError, isLoading])
 

@@ -12,7 +12,7 @@ function Loading() {
           justifyContent: "center",
           alignItems: "center",
           position: "fixed",
-          zIndex: "200",
+          zIndex: "1056",
           background: "rgba(6, 6, 6, 0.5)",
         }}
       >

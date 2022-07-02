@@ -2,13 +2,24 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/Landing.module.css'
+import { useSelector } from 'react-redux'
 import { Telephone, Lock, Download, ArrowLeft, ArrowRight } from 'react-bootstrap-icons'
 
 import Sponsor from '../assets/img/sponsor.png'
 import Phone from '../assets/img/phone.png'
 import Alex from '../assets/img/alex.png'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Landing() {
+  const { isError } = useSelector(state => state.auth)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isError === false) {
+      router.push('/dashboard')
+    }
+  }, [])
   return (
     <>
       <div className={styles.banner}>
