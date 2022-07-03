@@ -24,6 +24,7 @@ export default function UserLayout({ children, title, name, number }) {
   const router = useRouter()
   const dispatch = useDispatch()
   const { data } = useSelector(state => state.auth)
+  const { userData } = useSelector(state => state.user)
 
   const submitTopUpHandler = async () => {
     try {
@@ -73,8 +74,8 @@ export default function UserLayout({ children, title, name, number }) {
         <div className={styles.profileContainer}>
           <div className={styles.profPictContainer}><Image src={Profpict} className={styles.profPict} /></div>
           <div className={styles.nameContainer}>
-            <div className={styles.userName}>Robert Chandler</div>
-            <div className={styles.userNumber}>+62 8139 3877 7946</div>
+            <div className={styles.userName}>{`${userData.firstName} ${userData.lastName}`}</div>
+            <div className={styles.userNumber}>{userData.noTelp}</div>
           </div>
           <div className={styles.notif}><Bell className={styles.icon} /></div>
         </div>
@@ -82,8 +83,12 @@ export default function UserLayout({ children, title, name, number }) {
       <main className={styles.mainContainer}>
         <nav className={styles.nav}>
           <div className={styles.mainNav}>
-            <div className={title === "Dashboard" && !showTopUp ? styles.menuActive : styles.menu}><Grid className={styles.icon} /> Dashboard</div>
-            <div className={title === "Transfer" && !showTopUp ? styles.menuActive : styles.menu}><ArrowUp className={styles.icon} /> Transfer</div>
+            <Link href={"/dashboard"}>
+              <div className={title === "Dashboard" && !showTopUp ? styles.menuActive : styles.menu}><Grid className={styles.icon} /> Dashboard</div>
+            </Link>
+            <Link href={"/transfer"}>
+              <div className={title === "Transfer" && !showTopUp ? styles.menuActive : styles.menu}><ArrowUp className={styles.icon} /> Transfer</div>
+            </Link>
             <div className={showTopUp ? styles.menuActive : styles.menu}
               onClick={() => {
                 setShowTopUp(true)
@@ -150,7 +155,7 @@ export default function UserLayout({ children, title, name, number }) {
               <Button variant="secondary" onClick={() => setShowTopUp(false)}>
                 Cancel
               </Button>
-              <Button variant="primary" className={styles.modalPrimaryButton} onClick={()=> setShowTopUp(false)}>
+              <Button variant="primary" className={styles.modalPrimaryButton} onClick={() => setShowTopUp(false)}>
                 <Link href={link}>
                   <a target="_blank">Pay</a>
                 </Link>

@@ -1,0 +1,171 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  padding-left: 2.5%;
+}
+
+.transferCard {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 25px;
+  padding: 30px 5%;
+}
+
+.transferCard .title {
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #3A3D42;
+  margin-bottom: 20px;
+}
+
+.searchContainer {
+  background: rgba(58, 61, 66, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0px 20px;
+  height: 40px;
+  gap: 10px;
+}
+
+.searchContainer .iconContainer {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A9A9A9;
+}
+
+.searchContainer input {
+  border: none;
+  background: none;
+  font-family: Nunito Sans;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 23px;
+  letter-spacing: 0em;
+  text-align: left;
+
+}
+
+.searchContainer input::placeholder {
+  color: rgba(58, 61, 66, 0.4);
+
+}
+
+.searchContainer input:focus {
+  outline: none;
+}
+
+.receiverContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.userCard {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.profPictContainer {
+  width: 80px;
+  height: 80px;
+}
+
+.profPictContainer .profPict {
+  border-radius: 10px;
+  width: 80px;
+  height: 80px;
+}
+
+.nameContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.nameContainer .name {
+  font-family: Nunito Sans;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #4D4B57;
+}
+
+.nameContainer .number {
+  font-family: Nunito Sans;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #7A7886;
+}
+
+/* transfer detail */
+.transferInfo {
+  margin-top: 40px;
+  font-family: Nunito Sans;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #7A7886;
+
+}
+
+.transferInputContainer {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.transferInputContainer input {
+  font-family: Nunito Sans;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 56px;
+  letter-spacing: 0px;
+  text-align: center;
+  border: none;
+  color: #6379F4;
+
+}
+
+.transferInputContainer input:focus {
+  outline: none;
+}
+
+.transferInputContainer input::-webkit-outer-spin-button,
+.transferInputContainer input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.balanceInfo {
+  font-family: Nunito Sans;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #3A3D42;
+}

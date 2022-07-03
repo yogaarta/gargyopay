@@ -12,6 +12,8 @@ import styles from "../../styles/Dashboard.module.css"
 import UserLayout from '../../components/UserLayout'
 import { ArrowUp, PlusLg, ArrowDown } from 'react-bootstrap-icons'
 import Profpict from "../../assets/img/profpict.png"
+import { getUserDataAction } from '../../redux/actionCreators/userData';
+import { currencyFormatter } from '../../helper/formatter';
 
 export default function Dashboard() {
   const [title, setTitle] = useState("")
@@ -25,10 +27,12 @@ export default function Dashboard() {
   const router = useRouter()
   const dispatch = useDispatch()
   const { data } = useSelector(state => state.auth)
+  const { userData } = useSelector(state => state.user)
 
 
   useEffect(() => {
     setTitle("Dashboard")
+    dispatch(getUserDataAction(data.id, data.token))
   }, [])
 
   const submitTopUpHandler = async () => {
@@ -57,8 +61,8 @@ export default function Dashboard() {
           <section className={styles.balanceContainer}>
             <div className={styles.balanceLeft}>
               <div className={styles.title}>Balance</div>
-              <div className={styles.balance}>Rp120.000</div>
-              <div className={styles.phone}>+62 813-9387-7946</div>
+              <div className={styles.balance}>{currencyFormatter.format(userData.balance)}</div>
+              <div className={styles.phone}>{userData.noTelp}</div>
             </div>
             <div className={styles.balanceRight}>
               <div className={styles.transfer}><ArrowUp className={styles.icon} /> Transfer</div>

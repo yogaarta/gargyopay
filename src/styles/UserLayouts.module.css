@@ -23,7 +23,7 @@
 .profileContainer {
   display: flex;
   align-items: center;
-
+  width: 200px;
 }
 
 .profPictContainer {
@@ -42,6 +42,7 @@
 
 .nameContainer {
   margin: 0px 10px;
+  width: 100px;
 }
 
 .userName {
@@ -61,7 +62,7 @@
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0em;
-  text-align: left;
+  text-align: center;
   color: #3A3D42E5;
 
 
@@ -137,6 +138,7 @@
 }
 
 .logout {
+  margin-top: 50px;
   font-family: Nunito Sans;
   font-size: 18px;
   font-weight: 400;
