@@ -93,7 +93,7 @@ export default function Information() {
                 <div className={styles.left}>
                   <div className={styles.title}>Last Name</div>
                   {isEdit ?
-                    <input type="text" name="first" id="first" placeholder='Input First Name' 
+                    <input type="text" name="first" id="first" placeholder='Input Last Name' 
                     onChange={e => setLastName(e.target.value)}
                     />
                     :

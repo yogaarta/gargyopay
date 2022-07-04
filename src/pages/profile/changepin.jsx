@@ -70,9 +70,9 @@ export default function ChangePin() {
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setMsg('')
-  },[pin])
+  }, [pin])
 
   return (
     <>
@@ -85,16 +85,26 @@ export default function ChangePin() {
               Change PIN
             </div>
             <div className={styles.info}>
-              Enter your current 6 digits Zwallet PIN below to continue to the next steps.</div>
+              {page === 'check' ?
+                'Enter your current 6 digits Zwallet PIN below to continue to the next steps.'
+                : 'Type your new 6 digits security PIN to use in Zwallet.'
+              }</div>
             <section className={styles.pinContainer}>
-              {page === 'check' ? 
-            <div className={styles.title}>Check Pin</div>
-            :  
-            <div className={styles.title}>Create New Pin</div>
-            }
-              <ReactCodeInput type="number" fields={6} className={styles.reactCodeInput}
-                onChange={handlePinChange}
-              />
+              {page === 'check' ?
+                <>
+                  <div className={styles.title}>Check Pin</div>
+                  <ReactCodeInput type="number" fields={6} className={styles.reactCodeInput}
+                    onChange={handlePinChange}
+                  />
+                </>
+                :
+                <>
+                  <div className={styles.title}>Create New Pin</div>
+                  <ReactCodeInput type="number" fields={6} className={styles.reactCodeInput}
+                    onChange={handlePinChange}
+                  />
+                </>
+              }
               {isError === null ? <></> :
                 isError === true ?
                   <div className={styles.errorMsg}>{msg}</div>

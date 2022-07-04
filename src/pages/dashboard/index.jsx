@@ -11,7 +11,7 @@ import Loading from '../../components/Loading';
 import styles from "../../styles/Dashboard.module.css"
 import UserLayout from '../../components/UserLayout'
 import { ArrowUp, PlusLg, ArrowDown } from 'react-bootstrap-icons'
-import Profpict from "../../assets/img/profpict.png"
+import Profpict from "../../assets/img/default-pict.png"
 import { getUserDataAction } from '../../redux/actionCreators/userData';
 import { currencyFormatter } from '../../helper/formatter';
 
@@ -24,6 +24,9 @@ export default function Dashboard() {
   const [msg, setMsg] = useState("")
   const [link, setLink] = useState("")
   const [history, setHistory] = useState([])
+  const [dashboard, setDashboard] = useState({})
+  const [listIncome, setListIncome] = useState([])
+  const [listExpense, setListExpense] = useState([])
 
   const router = useRouter()
   const dispatch = useDispatch()
@@ -45,11 +48,29 @@ export default function Dashboard() {
     }
   }
 
+  const getDashboard = async () => {
+    try {
+      setIsLoading(true)
+      const { token } = data
+      const config = { headers: { Authorization: `Bearer ${token}` } }
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BE_HOST}/dashboard/${data.id}`, config)
+      console.log(response)
+      setDashboard(response.data.data)
+      setListExpense(response.data.data.listExpense)
+      setListIncome(response.data.data.listIncome)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+    }
+  }
+
   useEffect(() => {
     setTitle("Dashboard")
     dispatch(getUserDataAction(data.id, data.token))
     getHistory()
-  }, [])
+    getDashboard()
+  }, [isSuccess])
 
   const submitTopUpHandler = async () => {
     try {
@@ -98,48 +119,35 @@ export default function Dashboard() {
                 <div className={styles.income}>
                   <ArrowDown className={styles.icon} />
                   <div className={styles.title}>Income</div>
-                  <div className={styles.total}>Rp2.120.000</div>
+                  <div className={styles.total}>{currencyFormatter.format(dashboard.totalIncome)}</div>
                 </div>
                 <div className={styles.expense}>
                   <ArrowUp className={styles.icon} />
                   <div className={styles.title}>Expense</div>
-                  <div className={styles.total}>Rp1.560.000</div></div>
+                  <div className={styles.total}>{currencyFormatter.format(dashboard.totalExpense)}</div></div>
               </div>
               <div className={styles.chartBottom}>
-                <div className={styles.dayContainer}>
-                  <div className={styles.bar} style={{ height: "80%" }}></div>
-                  <div className={styles.day}>Sat</div>
+                {listIncome.map(item => (
+                  <div className={styles.dayContainer}>
+                    <div className={styles.bar} style={{ height: `${item.total * 100 / 500000}%` }}></div>
+                    <div className={styles.day}>{item.day.substring(0, 3)}</div>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.chartBottom}>
+                {listExpense.map(item => (
+                <div className={styles.expenseContainer}>
+                  <div className={styles.barExpense} style={{ height: `${item.total * 100 / 500000}%` }}></div>
                 </div>
-                <div className={styles.dayContainer}>
-                  <div className={styles.bar} style={{ height: "80%" }}></div>
-                  <div className={styles.day}>Sun</div>
-                </div>
-                <div className={styles.dayContainer}>
-                  <div className={styles.bar} style={{ height: "80%" }}></div>
-                  <div className={styles.day}>Mon</div>
-                </div>
-                <div className={styles.dayContainer}>
-                  <div className={styles.bar} style={{ height: "80%" }}></div>
-                  <div className={styles.day}>Tue</div>
-                </div>
-                <div className={styles.dayContainer}>
-                  <div className={styles.bar} style={{ height: "80%" }}></div>
-                  <div className={styles.day}>Wed</div>
-                </div>
-                <div className={styles.dayContainer}>
-                  <div className={styles.bar} style={{ height: "80%" }}></div>
-                  <div className={styles.day}>Thu</div>
-                </div>
-                <div className={styles.dayContainer}>
-                  <div className={styles.bar} style={{ height: "80%" }}></div>
-                  <div className={styles.day}>Fri</div>
-                </div>
+                ))}
               </div>
             </section>
             <section className={styles.historyContainer}>
               <div className={styles.titleContainer}>
                 <div className={styles.title}>Transaction History</div>
-                <div className={styles.seeAll}>See all</div>
+                <div className={styles.seeAll}
+                  onClick={() => router.push('/history')}
+                >See all</div>
               </div>
               <div className={styles.transactionContainer}>
                 {history.length > 0 && history.map(history => (

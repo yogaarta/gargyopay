@@ -12,6 +12,12 @@
   padding: 30px 5%;
 }
 
+.transferCard .titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .transferCard .title {
   font-family: Nunito Sans;
   font-size: 18px;
@@ -129,6 +135,39 @@
   letter-spacing: 0em;
   text-align: left;
   color: #7A7886;
+}
+
+/* PAGINATION */
+
+.pagination{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination .iconContainer {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #FFFFFF;
+  background-color: #6379F4;
+}
+
+.pagination .inactive{
+  background-color: #FFFFFF;
+}
+.pagination .active{
+  background-color: #6379F4;
+}
+
+.pagination .icon {
+  width: 20px;
+  height: 20px;
 }
 
 /* transfer detail */
