@@ -65,7 +65,9 @@ export default function Dashboard() {
               <div className={styles.phone}>{userData.noTelp}</div>
             </div>
             <div className={styles.balanceRight}>
-              <div className={styles.transfer}><ArrowUp className={styles.icon} /> Transfer</div>
+              <div className={styles.transfer}
+              onClick={()=> router.push('/transfer')}
+              ><ArrowUp className={styles.icon} /> Transfer</div>
               <div className={styles.transfer}
                 onClick={() => {
                   setShowTopUp(true)

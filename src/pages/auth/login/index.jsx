@@ -26,27 +26,14 @@ function Login() {
     setEmailFilled(email)
     setPassFilled(password)
     setButtonActive(email && password)
-    // if (isLoading) {
-    //   setIsShow(true)
-    // }
     if (isError === false) {
       (data.pin ? router.push('/dashboard') : router.push('/auth/pin'))
     }
   }, [email, password, isError, isLoading])
 
   const loginHandler = () => {
-    // try {
     let body = { email, password }
     dispatch(loginAction(body))
-    // setTimeout(()=>{
-    // if (!isError) {
-    //   (data.pin ? router.push('/') : router.push('/auth/pin'))
-    // }
-    // }, 2000)
-
-    // } catch (error) {
-    //   console.log(error)
-    // }
   }
 
   const showPassHandler = () => {

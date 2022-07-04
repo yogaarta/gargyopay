@@ -69,8 +69,7 @@ export default function Transfer() {
               >
                 <div className={styles.profPictContainer}>
                   <Image 
-                  src={user.image === null ? Profpict : `${user.image}`} 
-                  // loader={user.image === null ? 'default' : 'imgix'}
+                  src={user.image === null ? Profpict : `${process.env.NEXT_PUBLIC_CLOUDINARY}${user.image}`} 
                   className={styles.profPict} width={'80px'} height={'80px'}/></div>
                 <div className={styles.nameContainer}>
                   <div className={styles.name}>{`${user.firstName} ${user.lastName}`}</div>
