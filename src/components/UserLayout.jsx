@@ -72,7 +72,7 @@ export default function UserLayout({ children, title, name, number }) {
       <header className={styles.header}>
         <div className={styles.logo}><Link href={"/"}>GargyoPay</Link></div>
         <div className={styles.profileContainer}>
-          <div className={styles.profPictContainer}><Image src={Profpict} className={styles.profPict} /></div>
+          <div className={styles.profPictContainer}><Image src={userData.image ? `${process.env.NEXT_PUBLIC_CLOUDINARY}${userData.image}` : Profpict} className={styles.profPict} width={"50px"} height={"50px"}/></div>
           <div className={styles.nameContainer}>
             <div className={styles.userName}>{`${userData.firstName} ${userData.lastName}`}</div>
             <div className={styles.userNumber}>{userData.noTelp}</div>
@@ -95,7 +95,9 @@ export default function UserLayout({ children, title, name, number }) {
                 setIsSuccess(false)
               }}
             ><PlusLg className={styles.icon} /> Top Up</div>
-            <div className={title === "Profile" && !showTopUp ? styles.menuActive : styles.menu}><Person className={styles.icon} /> Profile</div>
+            <Link href={"/profile"}>
+              <div className={title === "Profile" && !showTopUp ? styles.menuActive : styles.menu}><Person className={styles.icon} /> Profile</div>
+            </Link>
           </div>
           <div className={styles.logout}
             onClick={() => setShowLogout(true)}

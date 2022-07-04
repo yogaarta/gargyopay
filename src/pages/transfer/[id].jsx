@@ -12,7 +12,7 @@ import ReactCodeInput from 'react-code-input'
 import Loading from '../../components/Loading';
 import styles from "../../styles/Transfer.module.css"
 import UserLayout from '../../components/UserLayout'
-import Profpict from "../../assets/img/profpict.png"
+import Profpict from "../../assets/img/default-pict.png"
 import { currencyFormatter } from '../../helper/formatter';
 import moment from 'moment';
 
@@ -114,9 +114,19 @@ export default function UserDetail() {
       setIsLoading(false)
     }
   }
+
+  const validateBalance = () =>{
+    if(amount > userData.balance){
+      return setMsg('You dont have enough balance')
+    }
+    setMsg('')
+    setPage('detail')
+  }
+
   useEffect(() => {
     setIsNotesFilled(notes)
     setIsAmountFilled(amount)
+    setMsg('')
   }, [notes, amount])
 
   useEffect(() => {
@@ -132,7 +142,7 @@ export default function UserDetail() {
             <section className={styles.transferCard}>
               <div className={styles.title}>Transfer Money</div>
               <div className={styles.userCard}>
-                <div className={styles.profPictContainer}><Image src={user.image ? user.image : Profpict} className={styles.profPict} /></div>
+                <div className={styles.profPictContainer}><Image src={user.image ? `${process.env.NEXT_PUBLIC_CLOUDINARY}${user.image}` : Profpict} className={styles.profPict} width={'80px'} height={'80px'}/></div>
                 <div className={styles.nameContainer}>
                   <div className={styles.name}>{`${user.firstName} ${user.lastName}`}</div>
                   <div className={styles.number}>{user.noTelp}</div>
@@ -155,10 +165,11 @@ export default function UserDetail() {
                   />
                 </label>
               </div>
+              <div className={styles.errorMsg}>{msg}</div>
               <div className={styles.buttonContainer}>
                 {isAmountFilled && isNotesFilled ?
                   <div className={styles.continueButton}
-                    onClick={() => setPage('detail')}
+                    onClick={validateBalance}
                   >Continue</div>
                   :
                   <div className={styles.continueButtonInactive}>Continue</div>
@@ -169,7 +180,7 @@ export default function UserDetail() {
               <section className={styles.transferCard}>
                 <div className={styles.title}>Transfer Money</div>
                 <div className={styles.userCard}>
-                  <div className={styles.profPictContainer}><Image src={user.image ? user.image : Profpict} className={styles.profPict} /></div>
+                  <div className={styles.profPictContainer}><Image src={user.image ? `${process.env.NEXT_PUBLIC_CLOUDINARY}${user.image}` : Profpict} className={styles.profPict} width={'80px'} height={'80px'}/></div>
                   <div className={styles.nameContainer}>
                     <div className={styles.name}>{`${user.firstName} ${user.lastName}`}</div>
                     <div className={styles.number}>{user.noTelp}</div>
@@ -230,7 +241,7 @@ export default function UserDetail() {
                 </div>
                 <div className={styles.title2}>Transfer To</div>
                 <div className={styles.userCard}>
-                  <div className={styles.profPictContainer}><Image src={user.image ? user.image : Profpict} className={styles.profPict} /></div>
+                  <div className={styles.profPictContainer}><Image src={user.image ? `${process.env.NEXT_PUBLIC_CLOUDINARY}${user.image}` : Profpict} className={styles.profPict} width={'80px'} height={'80px'}/></div>
                   <div className={styles.nameContainer}>
                     <div className={styles.name}>{`${user.firstName} ${user.lastName}`}</div>
                     <div className={styles.number}>{user.noTelp}</div>

@@ -277,6 +277,9 @@
 .transactionContainer .out{
   color: #FF5B37;
 }
+.transactionContainer .pending{
+  color: #7A7886;
+}
 
 
 .modalHeader {

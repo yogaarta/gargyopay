@@ -22,6 +22,11 @@ export default function Landing() {
   }, [])
   return (
     <>
+      <Head>
+        <title>
+          GargyoPay
+        </title>
+      </Head>
       <div className={styles.banner}>
         <div className={styles.navbar}>
           <div className={styles.logo}>GargyoPay</div>

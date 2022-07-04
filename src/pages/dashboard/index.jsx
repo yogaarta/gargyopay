@@ -23,16 +23,32 @@ export default function Dashboard() {
   const [isSuccess, setIsSuccess] = useState(false)
   const [msg, setMsg] = useState("")
   const [link, setLink] = useState("")
+  const [history, setHistory] = useState([])
 
   const router = useRouter()
   const dispatch = useDispatch()
   const { data } = useSelector(state => state.auth)
   const { userData } = useSelector(state => state.user)
 
+  const getHistory = async () => {
+    try {
+      setIsLoading(true)
+      const { token } = data
+      const config = { headers: { Authorization: `Bearer ${token}` } }
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BE_HOST}/transaction/history?page=1&limit=4`, config)
+      console.log(response)
+      setHistory(response.data.data)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+    }
+  }
 
   useEffect(() => {
     setTitle("Dashboard")
     dispatch(getUserDataAction(data.id, data.token))
+    getHistory()
   }, [])
 
   const submitTopUpHandler = async () => {
@@ -66,7 +82,7 @@ export default function Dashboard() {
             </div>
             <div className={styles.balanceRight}>
               <div className={styles.transfer}
-              onClick={()=> router.push('/transfer')}
+                onClick={() => router.push('/transfer')}
               ><ArrowUp className={styles.icon} /> Transfer</div>
               <div className={styles.transfer}
                 onClick={() => {
@@ -126,17 +142,20 @@ export default function Dashboard() {
                 <div className={styles.seeAll}>See all</div>
               </div>
               <div className={styles.transactionContainer}>
-                <div className={styles.item}>
-                  <div className={styles.pictNameContainer}>
-                    <div className={styles.profPictContainer}><Image src={Profpict} className={styles.profPict} /></div>
-                    <div className={styles.nameContainer}>
-                      <div className={styles.name}>Samuel Suhi</div>
-                      <div className={styles.status}>Accept</div>
+                {history.length > 0 && history.map(history => (
+                  <div className={styles.item}>
+                    <div className={styles.pictNameContainer}>
+                      <div className={styles.profPictContainer}><Image src={history.image ? `${process.env.NEXT_PUBLIC_CLOUDINARY}${history.image}` : Profpict} className={styles.profPict} width={'50px'} height={'50px'} /></div>
+                      <div className={styles.nameContainer}>
+                        <div className={styles.name}>{history.firstName}</div>
+                        <div className={styles.status}>{history.type}</div>
+                      </div>
                     </div>
+                    <div className={`${styles.nominal} ${history.status === 'success' ? (history.type === 'send' ? styles.out : styles.in) : styles.pending}`}>{`${history.status === 'success' ? (history.type === 'send' ? '-' : '+') : ''}${currencyFormatter.format(history.amount)}`}</div>
                   </div>
-                  <div className={`${styles.nominal} ${styles.out}`}>-Rp50.000</div>
-                </div>
-                <div className={styles.item}>
+
+                ))}
+                {/* <div className={styles.item}>
                   <div className={styles.pictNameContainer}>
                     <div className={styles.profPictContainer}><Image src={Profpict} className={styles.profPict} /></div>
                     <div className={styles.nameContainer}>
@@ -145,7 +164,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <div className={`${styles.nominal} ${styles.in}`}>+Rp50.000</div>
-                </div>
+                </div> */}
               </div>
             </section>
           </section>

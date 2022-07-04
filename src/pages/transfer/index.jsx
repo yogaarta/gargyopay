@@ -9,7 +9,7 @@ import Loading from '../../components/Loading';
 import styles from "../../styles/Transfer.module.css"
 import UserLayout from '../../components/UserLayout'
 import { Search } from 'react-bootstrap-icons'
-import Profpict from "../../assets/img/profpict.png"
+import Profpict from "../../assets/img/default-pict.png"
 
 export default function Transfer() {
   const [title, setTitle] = useState("")
