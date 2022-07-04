@@ -1,6 +1,7 @@
 import SignupAside from "../../../components/SignupAside";
 import styles from '../../../styles/Signup.module.css'
 import Link from 'next/link'
+import Head from "next/head"
 import { Person, Envelope, Lock, Eye, EyeSlash } from 'react-bootstrap-icons'
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -60,76 +61,83 @@ export default function Signup() {
     router.push("/auth/login")
   };
   return (
-    <main className={styles.globalContainer}>
-      {isLoading && <Loading />}
-      <SignupAside />
-      <section className={styles.mainContainer}>
-        <div className={styles.mainLogo}>GargyoPay</div>
-        <div className={styles.title}>
-          Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users
-        </div>
-        <div className={styles.info}>
-          Transfering money is eassier than ever, you can access GargyoPay wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!
-        </div>
-        <div className={`${styles.inputContainer} ${firstNameFilled ? styles.borderActive : styles.borderInactive}`}>
-          <label htmlFor="first-name">
-            <Person className={firstNameFilled ? styles.iconActive : styles.icon} />
-            <input type="text" id="first-name" placeholder="Enter your first name"
-              onChange={e => setFirstName(e.target.value)}
-            />
-          </label>
-        </div>
-        <div className={`${styles.inputContainer} ${lastNameFilled ? styles.borderActive : styles.borderInactive}`}>
-          <label htmlFor="last-name">
-            <Person className={lastNameFilled ? styles.iconActive : styles.icon} />
-            <input type="text" id="last-name" placeholder="Enter your last name"
-              onChange={e => setLastName(e.target.value)}
-            />
-          </label>
-        </div>
-        <div className={`${styles.inputContainer} ${emailFilled ? styles.borderActive : styles.borderInactive}`}>
-          <label htmlFor="email">
-            <Envelope className={emailFilled ? styles.iconActive : styles.icon} />
-            <input type="text" id="email" placeholder="Enter your email"
-              onChange={e => setEmail(e.target.value)}
-            />
-          </label>
-        </div>
-        <div className={`${styles.inputContainer} ${passFilled ? styles.borderActive : styles.borderInactive}`}>
-          <label htmlFor="pass">
-            <Lock className={passFilled ? styles.iconActive : styles.icon} />
-            <input type={isPassShown ? "text" : "password"} id="pass" placeholder="Enter your password"
-              onChange={e => setPassword(e.target.value)}
-            />
-            {isPassShown ? <Eye className={`${passFilled ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showPassHandler} /> : <EyeSlash className={`${passFilled ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showPassHandler} />}
-          </label>
-        </div>
-        {isError ? <div className={styles.errorMsg}>{msg}</div> : <></>}
-        {buttonActive ?
-          <div className={styles.button}
-            onClick={signUpHandler}
-          >Sign Up</div>
-          :
-          <div className={styles.buttonInactive}>Sign Up</div>
-        }
-        <div className={styles.login}>Already have an account? Let's <Link href={'/auth/login'}>Login</Link></div>
-      </section>
-      <Modal
-        show={isShow}
-        onHide={() => setIsShow(false)}>
-        <Modal.Header className={styles.modalHeader}>
-          <b>{msg}</b>
-        </Modal.Header>
-        <Modal.Body className={styles.modalBody}>Please check your email and verify your account before login</Modal.Body>
-        <Modal.Footer>
-          {/* <Button variant="secondary" onClick={handleClose}>
+    <>
+      <Head>
+        <title>
+          Sign Up
+        </title>
+      </Head>
+      <main className={styles.globalContainer}>
+        {isLoading && <Loading />}
+        <SignupAside />
+        <section className={styles.mainContainer}>
+          <div className={styles.mainLogo}>GargyoPay</div>
+          <div className={styles.title}>
+            Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users
+          </div>
+          <div className={styles.info}>
+            Transfering money is eassier than ever, you can access GargyoPay wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!
+          </div>
+          <div className={`${styles.inputContainer} ${firstNameFilled ? styles.borderActive : styles.borderInactive}`}>
+            <label htmlFor="first-name">
+              <Person className={firstNameFilled ? styles.iconActive : styles.icon} />
+              <input type="text" id="first-name" placeholder="Enter your first name"
+                onChange={e => setFirstName(e.target.value)}
+              />
+            </label>
+          </div>
+          <div className={`${styles.inputContainer} ${lastNameFilled ? styles.borderActive : styles.borderInactive}`}>
+            <label htmlFor="last-name">
+              <Person className={lastNameFilled ? styles.iconActive : styles.icon} />
+              <input type="text" id="last-name" placeholder="Enter your last name"
+                onChange={e => setLastName(e.target.value)}
+              />
+            </label>
+          </div>
+          <div className={`${styles.inputContainer} ${emailFilled ? styles.borderActive : styles.borderInactive}`}>
+            <label htmlFor="email">
+              <Envelope className={emailFilled ? styles.iconActive : styles.icon} />
+              <input type="text" id="email" placeholder="Enter your email"
+                onChange={e => setEmail(e.target.value)}
+              />
+            </label>
+          </div>
+          <div className={`${styles.inputContainer} ${passFilled ? styles.borderActive : styles.borderInactive}`}>
+            <label htmlFor="pass">
+              <Lock className={passFilled ? styles.iconActive : styles.icon} />
+              <input type={isPassShown ? "text" : "password"} id="pass" placeholder="Enter your password"
+                onChange={e => setPassword(e.target.value)}
+              />
+              {isPassShown ? <Eye className={`${passFilled ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showPassHandler} /> : <EyeSlash className={`${passFilled ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showPassHandler} />}
+            </label>
+          </div>
+          {isError ? <div className={styles.errorMsg}>{msg}</div> : <></>}
+          {buttonActive ?
+            <div className={styles.button}
+              onClick={signUpHandler}
+            >Sign Up</div>
+            :
+            <div className={styles.buttonInactive}>Sign Up</div>
+          }
+          <div className={styles.login}>Already have an account? Let's <Link href={'/auth/login'}>Login</Link></div>
+        </section>
+        <Modal
+          show={isShow}
+          onHide={() => setIsShow(false)}>
+          <Modal.Header className={styles.modalHeader}>
+            <b>{msg}</b>
+          </Modal.Header>
+          <Modal.Body className={styles.modalBody}>Please check your email and verify your account before login</Modal.Body>
+          <Modal.Footer>
+            {/* <Button variant="secondary" onClick={handleClose}>
             Close
           </Button> */}
-          <Button variant="primary" onClick={handleClose} className={styles.modalPrimaryButton}>
-            Login
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </main>
+            <Button variant="primary" onClick={handleClose} className={styles.modalPrimaryButton}>
+              Login
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </main>
+    </>
   )
 }

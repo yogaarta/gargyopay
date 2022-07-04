@@ -1,5 +1,6 @@
 import SignupAside from "../../../components/SignupAside";
 import Link from 'next/link'
+import Head from "next/head"
 import { useRouter } from 'next/router'
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -64,52 +65,59 @@ export default function Reset() {
   }, [password, password2, isError, isLoading])
 
   return (
-    <main className={styles.globalContainer}>
-      {isLoading && <Loading />}
-      <SignupAside />
-      <section className={styles.mainContainer}>
-        <div className={styles.mainLogo}>GargyoPay</div>
-        <div className={styles.title}>
-          Did You Forgot Your Password? Don't Worry, You Can Reset Your Password In a Minutes.
-        </div>
-        <div className={styles.info}>
-          To reset your password, you must type your e-mail and we will send a link to your email and you will be directed to the reset password screens.
-        </div>
-        <div className={`${styles.inputContainer} ${passFilled ? styles.borderActive : styles.borderInactive}`}>
-          <label htmlFor="pass">
-            <Lock className={passFilled ? styles.iconActive : styles.icon} />
-            <input type={isPassShown ? "text" : "password"} id="pass" placeholder="Create new password"
-              onChange={e => setPassword(e.target.value)}
-            />
-            {isPassShown ? <Eye className={`${passFilled ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showPassHandler} /> : <EyeSlash className={`${passFilled ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showPassHandler} />}
-          </label>
-        </div>
-        <div className={`${styles.inputContainer} ${passFilled2 ? styles.borderActive : styles.borderInactive}`}>
-          <label htmlFor="pass">
-            <Lock className={passFilled2 ? styles.iconActive : styles.icon} />
-            <input type={isConfirmPassShown ? "text" : "password"} id="pass" placeholder="Confirm new password"
-              onChange={e => setPassword2(e.target.value)}
-            />
-            {isConfirmPassShown ? <Eye className={`${passFilled2 ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showConfirmPassHandler} /> : <EyeSlash className={`${passFilled2 ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showConfirmPassHandler} />}
-          </label>
-        </div>
-        {isError === null ? <></> :
-          isError ?
-            <>
-              <div className={styles.forgot}><Link href={'/auth/forgot'}>Forgot password?</Link></div>
-              <div className={styles.errorMsg}>{msg}</div>
-            </>
-            : <div className={styles.successMsg}>{msg}</div>}
-        {!isSuccess ?
-          buttonActive ?
-            <div className={styles.button} onClick={resetPassHandler}>Reset Password</div>
+    <>
+      <Head>
+        <title>
+          Reset Password
+        </title>
+      </Head>
+      <main className={styles.globalContainer}>
+        {isLoading && <Loading />}
+        <SignupAside />
+        <section className={styles.mainContainer}>
+          <div className={styles.mainLogo}>GargyoPay</div>
+          <div className={styles.title}>
+            Did You Forgot Your Password? Don't Worry, You Can Reset Your Password In a Minutes.
+          </div>
+          <div className={styles.info}>
+            To reset your password, you must type your e-mail and we will send a link to your email and you will be directed to the reset password screens.
+          </div>
+          <div className={`${styles.inputContainer} ${passFilled ? styles.borderActive : styles.borderInactive}`}>
+            <label htmlFor="pass">
+              <Lock className={passFilled ? styles.iconActive : styles.icon} />
+              <input type={isPassShown ? "text" : "password"} id="pass" placeholder="Create new password"
+                onChange={e => setPassword(e.target.value)}
+              />
+              {isPassShown ? <Eye className={`${passFilled ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showPassHandler} /> : <EyeSlash className={`${passFilled ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showPassHandler} />}
+            </label>
+          </div>
+          <div className={`${styles.inputContainer} ${passFilled2 ? styles.borderActive : styles.borderInactive}`}>
+            <label htmlFor="pass">
+              <Lock className={passFilled2 ? styles.iconActive : styles.icon} />
+              <input type={isConfirmPassShown ? "text" : "password"} id="pass" placeholder="Confirm new password"
+                onChange={e => setPassword2(e.target.value)}
+              />
+              {isConfirmPassShown ? <Eye className={`${passFilled2 ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showConfirmPassHandler} /> : <EyeSlash className={`${passFilled2 ? styles.iconActive : styles.icon} ${styles.eye}`} onClick={showConfirmPassHandler} />}
+            </label>
+          </div>
+          {isError === null ? <></> :
+            isError ?
+              <>
+                <div className={styles.forgot}><Link href={'/auth/forgot'}>Forgot password?</Link></div>
+                <div className={styles.errorMsg}>{msg}</div>
+              </>
+              : <div className={styles.successMsg}>{msg}</div>}
+          {!isSuccess ?
+            buttonActive ?
+              <div className={styles.button} onClick={resetPassHandler}>Reset Password</div>
+              :
+              <div className={styles.buttonInactive} >Reset Password</div>
             :
-            <div className={styles.buttonInactive} >Reset Password</div>
-          :
-          <div className={styles.button} onClick={() => router.push('/auth/login')}>Login</div>
+            <div className={styles.button} onClick={() => router.push('/auth/login')}>Login</div>
 
-        }
-      </section>
-    </main>
+          }
+        </section>
+      </main>
+    </>
   )
 }

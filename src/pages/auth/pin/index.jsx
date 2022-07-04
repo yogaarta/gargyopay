@@ -1,5 +1,6 @@
 import SignupAside from "../../../components/SignupAside";
 import Link from 'next/link'
+import Head from "next/head"
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ReactCodeInput from 'react-code-input'
@@ -40,41 +41,48 @@ export default function Login() {
     }
   }
   return (
-    <main className={styles.globalContainer}>
-      {isLoading && <Loading />}
-      <SignupAside />
-      {isSuccess ?
-        <section className={`${styles.mainContainer} ${styles.pinSuccess}`}>
-          <div className={styles.mainLogo}>GargyoPay</div>
-          <div className={styles.checkContainer}><Check2 /></div>
-          <div className={styles.title}>
-            Your PIN Was Successfully Created
-          </div>
-          <div className={styles.info}>
-            Your PIN was successfully created and you can now access all the features in GargyoPay.
-          </div>
-          <Link href={"/dashboard"}>
-            <div className={styles.button}>Go To Dashboard</div>
-          </Link>
-        </section>
-        :
-        <section className={styles.mainContainer}>
-          <div className={styles.mainLogo}>GargyoPay</div>
-          <div className={styles.title}>
-            Secure Your Account, Your Wallet, and Your Data With 6 Digits PIN That You Created Yourself.
-          </div>
-          <div className={styles.info}>
-            Create 6 digits pin to secure all your money and your data in GargyoPay app. Keep it secret and don't tell anyone about your GargyoPay account password and the PIN.
-          </div>
-          <div className={styles.pinContainer}>
-            <ReactCodeInput type="number" fields={6} className={styles.reactCodeInput}
-              onChange={handlePinChange}
-            />
-          </div>
-          <div className={styles.button}
-            onClick={createPinHandler}>Confirm</div>
-        </section>
-      }
-    </main>
+    <>
+      <Head>
+        <title>
+          Create Pin
+        </title>
+      </Head>
+      <main className={styles.globalContainer}>
+        {isLoading && <Loading />}
+        <SignupAside />
+        {isSuccess ?
+          <section className={`${styles.mainContainer} ${styles.pinSuccess}`}>
+            <div className={styles.mainLogo}>GargyoPay</div>
+            <div className={styles.checkContainer}><Check2 /></div>
+            <div className={styles.title}>
+              Your PIN Was Successfully Created
+            </div>
+            <div className={styles.info}>
+              Your PIN was successfully created and you can now access all the features in GargyoPay.
+            </div>
+            <Link href={"/dashboard"}>
+              <div className={styles.button}>Go To Dashboard</div>
+            </Link>
+          </section>
+          :
+          <section className={styles.mainContainer}>
+            <div className={styles.mainLogo}>GargyoPay</div>
+            <div className={styles.title}>
+              Secure Your Account, Your Wallet, and Your Data With 6 Digits PIN That You Created Yourself.
+            </div>
+            <div className={styles.info}>
+              Create 6 digits pin to secure all your money and your data in GargyoPay app. Keep it secret and don't tell anyone about your GargyoPay account password and the PIN.
+            </div>
+            <div className={styles.pinContainer}>
+              <ReactCodeInput type="number" fields={6} className={styles.reactCodeInput}
+                onChange={handlePinChange}
+              />
+            </div>
+            <div className={styles.button}
+              onClick={createPinHandler}>Confirm</div>
+          </section>
+        }
+      </main>
+    </>
   )
 }

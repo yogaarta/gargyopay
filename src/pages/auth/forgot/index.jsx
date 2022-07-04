@@ -1,5 +1,6 @@
 import SignupAside from "../../../components/SignupAside";
 import Link from 'next/link'
+import Head from "next/head"
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Person, Envelope, Lock, Eye, EyeSlash } from 'react-bootstrap-icons'
@@ -45,6 +46,12 @@ export default function Forgot() {
   }, [email, password, isError, isLoading])
 
   return (
+    <>
+    <Head>
+        <title>
+          Create Pin
+        </title>
+      </Head>
     <main className={styles.globalContainer}>
       {isLoading && <Loading />}
       <SignupAside />
@@ -72,5 +79,6 @@ export default function Forgot() {
           }    
       </section>
     </main>
+            </>
   )
 }
